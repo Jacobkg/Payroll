@@ -5,7 +5,7 @@ class SalariedClassification
     @salary = salary
   end
   
-  def calculate_pay
+  def calculate_pay(paycheck)
     @salary
   end
   

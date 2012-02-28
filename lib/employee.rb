@@ -14,7 +14,7 @@ class Employee
   end
   
   def payday(paycheck)
-    pay = @classification.calculate_pay
+    pay = @classification.calculate_pay(paycheck)
     paycheck.gross_pay = pay
   end
   
