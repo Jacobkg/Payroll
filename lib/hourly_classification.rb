@@ -14,4 +14,8 @@ class HourlyClassification
     @time_cards[date]
   end
   
+  def calculate_pay
+    0.0
+  end
+  
 end
