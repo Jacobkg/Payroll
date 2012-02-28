@@ -33,6 +33,26 @@ describe "Paying hourly employees" do
     validate_hourly_paycheck(pt, id, pay_date, (8 + 1.5) * 15.25)
   end
   
+  it "pays single employee with two time cards" do
+    tc = TimeCardTransaction.new(pay_date, 2.0, id)
+    tc.execute
+    tc2 = TimeCardTransaction.new(Date.new(2001,11,8), 5.0, id)
+    tc2.execute
+    
+    pt.execute
+    validate_hourly_paycheck(pt, id, pay_date, 7*15.25)
+  end
+  
+  it "doesn't pay out on the wrong date" do
+    pay_date = Date.new(2001,11,8) #Thursday
+    tc = TimeCardTransaction.new(pay_date, 9.0, id)
+    tc.execute
+    
+    pt =  PaydayTransaction.new(pay_date)
+    pt.execute
+    pt.get_paycheck(id).should be_nil
+  end
+  
   def validate_hourly_paycheck(pt, id, pay_date, pay)
     pc = pt.get_paycheck(id)
     pc.should_not be_nil
